@@ -1,0 +1,82 @@
+
+.div{
+    top: 50px;
+    left: 50px;
+}
+.inp{
+    width: 150px;
+}
+.div2{
+     width: 520px;
+      height: 220px; 
+    border: 1px solid lightgray;  
+    position: absolute;
+    top:100%;
+    left:0%;
+}
+.tr1{
+   background: #E9ECEF;
+}
+#table1{
+    text-align: center;
+    width: 224px;
+    border: 1px solid lightgray;
+    font-size: 13px;
+    position: absolute;
+    top:30%;
+    left: 5%;
+}
+#sp1{
+    position: absolute;
+    top:18%;
+    left:20%;
+    font-size: 18px;
+}
+#sp2{
+    position: absolute;
+    top:18%;
+    right: 20%;
+    font-size: 18px;
+}
+#sp3{
+    position: absolute;
+    top:5%;
+    left: 45%;
+    font-size: 18px;
+}
+#table2{
+    text-align: center;
+    width: 224px;
+    border: 1px solid lightgray;
+    font-size: 13px;
+    position: absolute;
+    top:30%;
+    left:52%;
+}
+#b1{
+    font-size: 13px;
+    position: absolute;
+    top:5%;
+    right: 2%;
+}
+#b2{
+    font-size: 13px;
+    position: absolute;
+    top:5%;
+    left: 2%;
+}
+.opasity{
+    opacity: 0.3;
+}
+.now{
+background: lightgray;
+}
+#cl2{
+    position: absolute;
+    left: 35%;
+    top: 11%;
+}
+.over{
+    background: rgb(178, 252, 252); 
+    cursor: pointer;
+}

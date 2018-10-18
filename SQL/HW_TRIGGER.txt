@@ -1,0 +1,185 @@
+1. При взятии определенной книги, ее кол-во уменьшалось на 1
+USE Library
+
+ALTER TRIGGER BooksCnt
+ON S_Cards
+AFTER INSERT
+AS
+DECLARE @BooksId int;
+DECLARE @DateOut varchar (36);
+DECLARE @IdS_Cards int;
+DECLARE @Quan int
+
+SELECT @BooksId = Id_Book, @DateOut = DateOut, @IdS_Cards = ID
+FROM inserted
+
+	SELECT @Quan = Books.Quantity
+	FROM Books
+	WHERE Books.ID= @BooksId
+
+IF @DateOut is NOT NULL AND @Quan > 0
+	UPDATE Books
+	SET Books.Quantity=Books.Quantity-1
+	WHERE  Books.ID= @BooksId
+ELSE 
+Begin
+	DELETE FROM S_Cards
+	WHERE S_Cards.ID = @IdS_Cards
+	PRINT 'Этой книги нет в библиотеке!'
+END
+
+INSERT INTO S_Cards
+(
+	Id_Student,
+	Id_Book,
+	DateOut,
+	Id_Lib
+)
+VALUES
+(2,1, 19.01,2 )
+
+SELECT * FROM Books
+
+2. При возврате книги, ее кол-во увеличивалось на 1
+ALTER TRIGGER BooksIN
+ON S_Cards
+AFTER INSERT
+AS
+DECLARE @BooksId int;
+DECLARE @DateIn varchar (36);
+DECLARE @IdS_Cards int;
+DECLARE @Quan int;
+DECLARE @DateOut varchar (36);
+
+SELECT @BooksId = Id_Book, @DateIn = DateIn, @IdS_Cards = ID, @DateOut = DateOut
+FROM inserted
+
+	SELECT @Quan = Books.Quantity
+	FROM Books
+	WHERE Books.ID= @BooksId
+
+IF @DateIn is NOT NULL
+	UPDATE Books
+	SET Books.Quantity=Books.Quantity+1
+	WHERE  Books.ID= @BooksId
+ELSE
+Begin
+	DELETE FROM S_Cards
+	WHERE S_Cards.ID = @IdS_Cards
+	PRINT 'Ошибка при заполнении!'
+END
+
+
+INSERT INTO S_Cards
+(
+	Id_Student,
+	Id_Book,
+
+	Id_Lib
+)
+VALUES
+(2,1, 2 )
+
+3. Нельзя выдать книгу, которой уже нет в библиотеке
+ALTER TRIGGER Availability
+ON S_Cards
+AFTER INSERT
+AS
+DECLARE @BooksId int;
+DECLARE @DateIn varchar (36);
+DECLARE @IdS_Cards int;
+DECLARE @Quan int;
+DECLARE @DateOut varchar (36);
+
+SELECT @BooksId = Id_Book, @DateIn = DateIn, @IdS_Cards = ID, @DateOut = DateOut
+FROM inserted
+
+	SELECT @Quan = Books.Quantity
+	FROM Books
+	WHERE Books.ID= @BooksId
+
+IF @DateIn is NULL AND @DateOut is NULL AND @Quan <=0
+BEGIN
+	PRINT 'Error!';
+	ROLLBACK TRAN;
+END
+ELSE IF @DateIn is NULL AND @DateOut is NOT NULL AND @Quan <=0
+BEGIN
+	PRINT 'Error!';
+	ROLLBACK TRAN;
+END
+
+4. Нельзя выдать более 3 книг одному студенту
+CREATE TRIGGER UpdateS_Cards
+ON S_Cards
+INSTEAD OF INSERT
+AS
+DECLARE @idStudents int
+DECLARE @cnt int
+DECLARE @id int
+
+SELECT @idStudents = Id_Student, @id = ID
+FROM INSERTED
+
+SET @cnt = (SELECT COUNT(*)FROM S_Cards WHERE Id_Student = @idStudents AND DateIn is NOT NULL) - (SELECT COUNT(*)FROM S_Cards WHERE Id_Student = @idStudents AND DateOut is NOT NULL)
+
+IF @cnt>3
+BEGIN
+	DELETE FROM S_Cards 
+	WHERE ID = @id
+	PRINT 'Отказано в выдаче! У студента исчерпан лимит'
+END
+
+5. При удалении книги, данные копируются в МуУдаленные
+
+CREATE TRIGGER UpdateMyDeleteBooks
+ON Books
+AFTER DELETE
+AS
+DECLARE @Id int,
+	@Name varchar(70),
+	@NPages int,
+	@YearPress int,
+	@Id_Themes int,
+	@Id_Category int,
+	@Id_Author int,
+	@Id_Press int,
+	@Comment varchar(32),
+	@Quantity int,
+	@Price decimal(10,4)
+
+SELECT @Name = Name, @NPages = NPages, @YearPress = YearPress, @Id_Themes = Id_Themes, @Id_Category = Id_Category, @Id_Author = Id_Author, @Id_Press = Id_Press, @Comment = Comment, @Quantity = Quantity, @Price = Price
+FROM DELETED
+
+INSERT INTO MyDeleteBooks(Name, NPages, YearPress,Id_Themes,Id_Category,Id_Author,Id_Press,Comment,Quantity,Price)VALUES
+(
+	 @Name, @NPages, @YearPress,@Id_Themes,@Id_Category,@Id_Author,@Id_Press,@Comment,@Quantity,@Price
+)
+
+
+6. Если книга добавляется в базу, она должна быть удалена из Муудаленные
+ALTER TRIGGER DELETEMyDeleteBooks
+ON Books
+AFTER INSERT
+AS
+DECLARE @Id int,
+	@Name varchar(70),
+	@YearPress int,
+	@Id_Themes int,
+	@Id_Category int,
+	@Id_Author int,
+	@Id_Press int,
+	@Comment varchar(32),
+	@Quantity int,
+	@Price decimal(10,4)
+
+SELECT @Id = ID, @Name = Name, @YearPress = YearPress, @Id_Themes= Id_Themes, @Id_Category = Id_Category, @Id_Author = Id_Author, @Id_Press = Id_Press
+FROM INSERTED
+
+DELETE FROM MyDeleteBooks 
+WHERE Name = @Name
+	AND YearPress = @YearPress
+	AND Id_Category = @Id_Category
+	AND Id_Author = @Id_Author
+	AND Id_Press = @Id_Press
+	AND Id_Themes = @Id_Themes

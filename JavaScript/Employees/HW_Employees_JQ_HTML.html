@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Employees</title>
+
+    <link rel="stylesheet" href="HW_Employees_JQ_Css.css"></link>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="jquery-3.3.1.js"></script>
+    <script src="C:\Users\Programmer\Documents\jquery-ui-1.12.1.custom\jquery-ui.js"></script>
+    <script src="HW_Employees_JQ.js"></script>
+</head>
+
+<body id="body">
+    <div class="opasity"></div>
+    <div id="div">
+        <div class="d1">
+            <p class="f">Список сотрудников</p>
+            <button id="add" type="button" class="btn btn-outline-success ">+ Сотрудник</button>
+        </div>
+    </div>
+    <div id="ar">
+        <div class="ar2">
+            <img id="imgar" class="rounded float-left im" alt="Фото">
+            <div class="input-group col-7">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text ar">ФИО</span>
+                </div>
+                <input type="text" class="form-control" id="fio">
+            </div>
+            <div class="input-group col-7">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text ar">Должность</span>
+                </div>
+                <input type="text" class="form-control" id="work">
+            </div>
+            <div class="input-group col-7">
+                <div class="input-group-prepend ">
+                    <span class="input-group-text ar">Возраст</span>
+                </div>
+                <input class="form-control " type="text" id="age">
+            </div>
+            <div class="input-group mb-3 col-7 ">
+                <div class="custom-file ">
+                    <input type="file" class="custom-file-input " id="inputGroupFile02">
+                    <label class="custom-file-label " for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Выберите файл...</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Загрузить</button>
+                </div>
+            </div>
+            <div class="z">
+                <button id="dob" type="button" class="btn btn-outline-success">Добавить</button>
+                <button id="otm" type="button" class="btn btn-outline-danger">Отмена</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

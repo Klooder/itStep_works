@@ -1,0 +1,240 @@
+1. Показать всю информацию о продажах
+USE Other
+
+SELECT Sellers.Name AS Sellers, CD.Name AS  CD, CD.CD_Date, Bands.Name AS Bands, Format.Name AS Format
+FROM Sellers, Selling, CD, Bands,  Format
+WHERE Selling.Id_Seller = Sellers.Id
+	AND Selling.Id_cd = CD.Id
+	AND CD.Id_band = Bands.Id
+	AND CD.Id_format = Format.Id
+ORDER BY Sellers.Name
+
+2. Показать кол-во проданных дисков по каждой из групп
+USE Other
+
+SELECT Bands.Name, Count(CD.Name) AS CD
+FROM Bands, CD, Selling
+WHERE Selling.Id_cd = Cd.Id
+	AND CD.Id_band = Bands.Id
+GROUP BY Bands.Name
+
+3. Показать самую популярную группу
+USE Other
+
+CREATE VIEW SellingStatisticsForBands
+AS
+SELECT Bands.Name, COUNT(CD.Name) AS Selling
+FROM   Selling, Bands, CD
+WHERE  Selling.Id_cd = CD.Id 
+	AND CD.Id_band = dbo.Bands.Id
+GROUP BY Bands.Name
+
+SELECT SellingStatisticsForBands.Name, SellingStatisticsForBands.Selling AS [Max Selling]
+FROM SellingStatisticsForBands
+WHERE SellingStatisticsForBands.Selling =
+	(
+		SELECT MAX (SellingStatisticsForBands.Selling) FROM SellingStatisticsForBands
+	)
+
+4. Показать самого успешного продавца
+USE Other
+
+CREATE VIEW SellersSelling
+AS
+SELECT Sellers.Name, COUNT(Selling.Id_cd) AS Seller
+FROM Sellers, CD, Selling
+WHERE	Sellers.Id = Selling.Id_Seller
+	AND Selling.Id_cd = CD.Id
+GROUP BY Sellers.Name
+
+SELECT SellersSelling.Name AS [Best Sellers], SellersSelling.Seller [Selling]
+FROM SellersSelling
+WHERE SellersSelling.Seller =
+	(
+		SELECT MAX (SellersSelling.Seller) FROM SellersSelling
+	)
+
+5. Показать самый популярный год
+USE Other
+
+CREATE VIEW PopularYear
+AS
+SELECT CD.CD_Date, COUNT(CD.CD_Date) AS cnt
+FROM CD, Selling
+WHERE Selling.Id_cd = CD.Id
+GROUP BY CD.CD_Date
+
+SELECT PopularYear.CD_Date, PopularYear.cnt AS [MAX cnt]	
+FROM PopularYear
+WHERE PopularYear.cnt =
+	(
+		SELECT MAX (PopularYear.cnt) FROM PopularYear
+	)
+
+	
+
+Запросы Library
+
+1. Показать издательство, которое издало наибольшее кол-во книг по программированию
+USE Library
+
+CREATE VIEW MaxQuantityForProgrammer
+AS
+SELECT Press.Name, SUM(Books.Quantity) AS [Quantity]
+FROM Press, Books, themes
+WHERE Books.Id_Press = Press.ID
+	AND Books.Id_Themes = themes.ID
+	AND themes.NAME = 'Программирование'
+GROUP BY Press.Name
+
+SELECT MaxQuantityForProgrammer.Name, MaxQuantityForProgrammer.Quantity AS [Max Quantity]
+FROM MaxQuantityForProgrammer
+WHERE MaxQuantityForProgrammer.Quantity = 
+	(
+		SELECT MAX(MaxQuantityForProgrammer.Quantity) FROM MaxQuantityForProgrammer
+	)
+
+2. Показать тематику, по которой издано наименьшее кол-во страниц
+USE Library
+
+CREATE VIEW ThemesStatistics
+AS
+SELECT themes.NAME, SUM(Books.NPages) AS NPages
+FROM Books, Themes
+WHERE Books.Id_Themes = themes.ID
+GROUP BY themes.NAME
+	
+SELECT ThemesStatistics.NAME, ThemesStatistics.NPages AS [Min Pages]
+FROM ThemesStatistics
+WHERE ThemesStatistics.NPages = 
+	(
+		SELECT MIN(ThemesStatistics.NPages) FROM ThemesStatistics
+	)
+
+3. Показать самую дорогую книгу издательства BHV
+USE Library
+
+CREATE VIEW BooksBHV
+AS
+SELECT Books.Name, Books.Price
+FROM Books, Press
+WHERE Books.Id_Press = Press.ID
+	AND Press.Name = 'BHV'
+
+SELECT BooksBHV.Name, BooksBHV.Price AS [Max Price]
+FROM BooksBHV
+WHERE BooksBHV.Price =
+	(
+		SELECT MAX(BooksBHV.Price) FROM BooksBHV
+	)
+
+4. Показать книги у которых кол-во страниц больше чем средне
+USE Library
+
+SELECT Books.Name, Books.NPages
+FROM Books
+WHERE Books.NPages > ((SELECT SUM(Books.NPages) FROM Books) / (SELECT COUNT(*) FROM Books))
+
+
+	Хранимые процедуры (Library)
+1. Написать хранимую процедуру, возвращающую имя и фамилию библиотекаря, выдавшего наиболее кол-во книг
+USE Library
+
+CREATE PROCEDURE BestLibs
+AS
+SELECT cnt.Name, cnt.cnt
+FROM
+(SELECT MAX(A.cnt) AS cnt
+FROM
+(
+SELECT S.Name, SUM (T.cnt + S.cnt) AS cnt
+FROM
+(SELECT libs.firstname + ' ' + libs.lastname AS Name, COUNT (S_Cards.Id_Book) AS cnt
+FROM libs, S_Cards
+WHERE S_Cards.Id_Lib = libs.id
+GROUP BY libs.firstname, libs.lastname)S,
+(SELECT libs.firstname + ' ' + libs.lastname AS Name, COUNT (T_Cards.Id_Books) AS cnt
+FROM libs, T_Cards
+WHERE T_Cards.Id_Lib = libs.id
+GROUP BY libs.firstname, libs.lastname)T
+WHERE S.Name = T.Name
+GROUP BY S.Name
+)A)LibsMax,
+(SELECT S.Name, SUM (T.cnt + S.cnt) AS cnt
+FROM
+(SELECT libs.firstname + ' ' + libs.lastname AS Name, COUNT (S_Cards.Id_Book) AS cnt
+FROM libs, S_Cards
+WHERE S_Cards.Id_Lib = libs.id
+GROUP BY libs.firstname, libs.lastname)S,
+(SELECT libs.firstname + ' ' + libs.lastname AS Name, COUNT (T_Cards.Id_Books) AS cnt
+FROM libs, T_Cards
+WHERE T_Cards.Id_Lib = libs.id
+GROUP BY libs.firstname, libs.lastname)T
+WHERE S.Name = T.Name
+GROUP BY S.Name)cnt
+WHERE cnt.cnt = LibsMax.cnt;
+
+
+exec BestLibs
+
+
+2. Написать хранимую процедуру, подсчитующую факториал числа
+CREATE PROCEDURE Factorial
+	@a int
+AS
+DECLARE @b int
+DECLARE	@fac int
+
+SET @fac=1
+SET @b = 1
+IF @a =0
+	SET @fac = 1
+IF @a < 0
+	RAISERROR (15622, -1,-1, 'Error');
+ELSE
+BEGIN
+WHILE @b<@a+1
+BEGIN 
+	SET @fac=@fac*@b
+	SET @b = @b +1
+END
+RETURN @fac
+END
+GO
+
+DECLARE @c int;
+execute @c = Factorial -1;
+IF @c>0
+PRINT 'Factorial ' + str(@c)
+
+3. Написать хранимую процедуру, которая выводит самую популярную тематику по факультету
+USE Library
+
+CREATE PROCEDURE FacultiesTheme
+	@Facul nvarchar(64)
+AS
+SELECT B.Faculties, B.Themes, B.cnt
+FROM
+(SELECT MAX(A.cnt) AS cnt
+FROM	
+(SELECT Faculties.Name AS Faculties, themes.NAME AS Themes, COUNT(Books.id) AS cnt
+FROM Faculties, themes, Books, S_Cards, groups, Students
+WHERE S_Cards.Id_Book = Books.ID
+	AND Books.Id_Themes = themes.ID
+	AND S_Cards.Id_Student = Students.ID
+	AND Students.Id_Group = groups.id
+	AND groups.id_faculty = Faculties.ID
+	AND Faculties.Name = @Facul
+GROUP BY Faculties.Name, themes.NAME)A)C,
+(SELECT Faculties.Name AS Faculties, themes.NAME AS Themes, COUNT(Books.id) AS cnt
+FROM Faculties, themes, Books, S_Cards, groups, Students
+WHERE S_Cards.Id_Book = Books.ID
+	AND Books.Id_Themes = themes.ID
+	AND S_Cards.Id_Student = Students.ID
+	AND Students.Id_Group = groups.id
+	AND groups.id_faculty = Faculties.ID
+	AND Faculties.Name = @Facul
+GROUP BY Faculties.Name, themes.NAME)B
+WHERE C.cnt=B.cnt
+
+exec FacultiesTheme 'Программирования'

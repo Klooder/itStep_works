@@ -1,0 +1,14 @@
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.csprojResolveAssemblyReference.cache
+D:\C#WPF\Fifteen\obj\x86\Debug\MainWindow.baml
+D:\C#WPF\Fifteen\obj\x86\Debug\MainWindow.g.cs
+D:\C#WPF\Fifteen\obj\x86\Debug\App.g.cs
+D:\C#WPF\Fifteen\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen_MarkupCompile.cache
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen_MarkupCompile.lref
+D:\C#WPF\Fifteen\obj\x86\Debug\App.baml
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.g.resources
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.Properties.Resources.resources
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.csproj.GenerateResource.Cache
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.csproj.CoreCompileInputs.cache
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.exe
+D:\C#WPF\Fifteen\obj\x86\Debug\Fifteen.pdb

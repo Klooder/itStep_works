@@ -1,0 +1,32 @@
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe.config
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\bin\Debug\ConsoleApplication3.pdb
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Debug\ConsoleApplication3.csprojResolveAssemblyReference.cache
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Debug\ConsoleApplication3.exe
+c:\users\09642\documents\visual studio 2015\Projects\ConsoleApplication3\ConsoleApplication3\obj\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe.config
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.exe
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Documents\Visual Studio 2015\Projects\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csprojResolveAssemblyReference.cache
+D:\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe.config
+D:\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe
+D:\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.pdb
+D:\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csprojResolveAssemblyReference.cache
+D:\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csproj.CoreCompileInputs.cache
+D:\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.exe
+D:\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Desktop\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe.config
+C:\Users\09642\Desktop\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.exe
+C:\Users\09642\Desktop\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Desktop\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe
+C:\Users\09642\Desktop\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.pdb
+C:\Users\09642\Desktop\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csprojResolveAssemblyReference.cache
+D:\It\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe.config
+D:\It\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.exe
+D:\It\C#\Car\ConsoleApplication3\bin\Debug\ConsoleApplication3.pdb
+D:\It\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csprojResolveAssemblyReference.cache
+D:\It\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.csproj.CoreCompileInputs.cache
+D:\It\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.exe
+D:\It\C#\Car\ConsoleApplication3\obj\Debug\ConsoleApplication3.pdb

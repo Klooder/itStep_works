@@ -1,0 +1,79 @@
+USE Other
+
+CREATE TABLE Bands
+(
+	Id int NOT NULL PRIMARY KEY IDENTITY (1,1),
+	[Name] nvarchar(50) NOT NULL,
+	[Year] int 
+);
+
+CREATE TABLE [Format]
+(
+	Id int NOT NULL PRIMARY KEY IDENTITY (1,1),
+	[Name] nvarchar(50) NOT NULL
+);
+
+CREATE TABLE Sellers
+(
+	Id int NOT NULL PRIMARY KEY IDENTITY (1,1),
+	[Name] nvarchar(70) NOT NULL  
+);
+
+CREATE TABLE CD
+(
+	Id int NOT NULL PRIMARY KEY IDENTITY (1,1),
+	[Name] nvarchar(70) NOT NULL,
+	CD_Date int check (CD_Date > 1995),
+	Id_band int,
+	Id_format int,
+	CONSTRAINT FK_FORMAT FOREIGN KEY (Id_format) 
+	REFERENCES [Format] (Id)
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION,
+);
+
+CREATE TABLE Selling
+(
+	Id int NOT NULL PRIMARY KEY IDENTITY (1,1),
+	Id_Seller int,
+	Id_cd int,
+	CONSTRAINT FK_Sellers FOREIGN KEY (Id_Seller) 
+	REFERENCES Sellers (Id)
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION,
+
+);
+
+INSERT INTO Bands ([Name]) VALUES ('Сборники');
+INSERT INTO Bands ([Name], [Year]) VALUES ('виа Гра', 2002);
+INSERT INTO Bands ([Name], [Year]) VALUES ('Ария', 1984);
+INSERT INTO Bands ([Name], [Year]) VALUES ('Меладзе', 1995);
+INSERT INTO Bands ([Name], [Year]) VALUES ('Тальков', 1984);
+INSERT INTO Bands ([Name], [Year]) VALUES ('Наутилус', 1983);
+
+INSERT INTO [Format] ([Name]) VALUES ('audio');
+INSERT INTO [Format] ([Name]) VALUES ('mp3');
+
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Союз28', 2004, 1, 1);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Стоп Снято', 2002, 2, 1);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Крещенье Огнем', 2003, 3, 1);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Все альбомы', 2005, 4, 2);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Все альбомы', 2005, 5, 2);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Лучшие песни', 2005, 3, 2);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Атлантида', 1997, 6, 2);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Атлантида', 1997, 6, 1);
+INSERT INTO CD ([Name], CD_Date, Id_band, Id_format) VALUES ('Крылья', 1997, 6, 1);
+
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,1);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,2);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,3);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,4);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,5);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (2,6);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (2,1);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (2,8);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (1,9);
+INSERT INTO Selling (Id_Seller, Id_cd) VALUES (2,9);
+
+INSERT INTO Sellers ([Name]) VALUES ('Федоров Максим');
+INSERT INTO Sellers ([Name]) VALUES ('Орлов Александр');

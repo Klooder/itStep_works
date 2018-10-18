@@ -1,0 +1,11 @@
+G:\Works\C#\Serialize\Serialize\bin\Debug\Serialize.exe.config
+G:\Works\C#\Serialize\Serialize\bin\Debug\Serialize.exe
+G:\Works\C#\Serialize\Serialize\bin\Debug\Serialize.pdb
+G:\Works\C#\Serialize\Serialize\obj\Debug\Serialize.exe
+G:\Works\C#\Serialize\Serialize\obj\Debug\Serialize.pdb
+D:\It\C#\Serialize\Serialize\bin\Debug\Serialize.exe.config
+D:\It\C#\Serialize\Serialize\bin\Debug\Serialize.exe
+D:\It\C#\Serialize\Serialize\bin\Debug\Serialize.pdb
+D:\It\C#\Serialize\Serialize\obj\Debug\Serialize.csproj.CoreCompileInputs.cache
+D:\It\C#\Serialize\Serialize\obj\Debug\Serialize.exe
+D:\It\C#\Serialize\Serialize\obj\Debug\Serialize.pdb

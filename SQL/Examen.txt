@@ -1,0 +1,420 @@
+--1. Посчитать количество забитых (пропущенных) командой голов
+--ALTER PROCEDURE TeamGoal
+--	@team nvarchar (64)
+--AS
+--DECLARE @M int
+-- SET @M = (SELECT COUNT(*)
+--FROM GoalsScored, Tours, Games, Players, Teams
+--WHERE GoalsScored.id_game = Games.id
+--	AND GoalsScored.ID_Player = Players.id
+--	AND Players.ID_Teams <> Teams.id
+--	AND Teams.Name = @team
+--	AND Games.id = (SELECT Games.id FROM Games WHERE Games.id_tour = Tours.id AND (Games.ID_TeamHome = Teams.id OR Games.ID_TeamGuests = Teams.id))
+--)
+--SELECT Teams.Name AS [Team], COUNT (GoalsScored.ID_Player) AS [goals scored], @M AS [goals missed]
+--FROM Teams, GoalsScored, Players
+--WHERE Teams.Name = @team
+--	AND Players.ID_Teams = Teams.ID
+--	AND GoalsScored.ID_Player = Players.ID
+--GROUP BY Teams.Name
+
+--GO	
+	exec TeamGoal 'Манчестер Юнайтед'
+	exec TeamGoal 'Ливерпуль'
+	exec TeamGoal 'Челси'
+-----------------------------------------------------------------------------------------------
+--2. Вывести лучшего бомбардира чемпионата и лучшего бомбардира по команде
+--CREATE PROCEDURE TopScorer
+--AS
+--SELECT PlayersAndGoal.player AS [top scorer], PlayersAndGoal.team, PlayersAndGoal.[goals scored]  AS [goals scored]
+--FROM PlayersAndGoal
+--WHERE PlayersAndGoal.[goals scored] = (
+--	SELECT MAX (PlayersAndGoal.[goals scored] ) FROM PlayersAndGoal
+--	)
+--GROUP BY PlayersAndGoal.player, PlayersAndGoal.team, PlayersAndGoal.[goals scored]
+--GO
+exec TopScorer
+------------------------------------------------------------------------
+--ALTER VIEW PlayersAndGoal
+--AS
+--SELECT Players.Name + ' ' + Players.Surname AS [player], Teams.Name AS team, COUNT (GoalsScored.ID_Player) as [goals scored]
+--FROM Players, Teams, GoalsScored
+--WHERE GoalsScored.ID_Player = Players.ID
+--	AND Players.ID_Teams = Teams.ID
+--GROUP BY Players.Name + ' ' + Players.Surname, Teams.Name
+
+--ALTER PROCEDURE TopScorerForTeam
+--	@team nvarchar (64)
+--AS
+--SELECT *
+--FROM PlayersAndGoal
+--WHERE PlayersAndGoal.team = @team
+--	AND PlayersAndGoal.[goals scored] = (SELECT MAX(PlayersAndGoal.[goals scored]) FROM PlayersAndGoal WHERE PlayersAndGoal.team = @team)
+--GROUP BY PlayersAndGoal.player, PlayersAndGoal.team, PlayersAndGoal.[goals scored]
+--GO
+
+exec TopScorerForTeam 'Манчестер Юнайтед'
+exec TopScorerForTeam 'Челси'
+exec TopScorerForTeam 'Арсенал'
+------------------------------------------------------------------------------------------
+--3. Вывести лучшего голкипера
+--ALTER PROCEDURE BestGoalkeeper
+--AS
+--SELECT Players.Name + ' ' + Players.Surname AS [Best Goalkeeper], B.team, B.missed
+--FROM
+--(SELECT MIN(A.missed) AS missed
+--FROM
+--(SELECT  COUNT(*) AS missed
+--FROM GoalsScored, Tours, Games, Players, Teams
+--WHERE GoalsScored.id_game = Games.id
+--	AND GoalsScored.ID_Player = Players.id
+--	AND Players.ID_Teams <> Teams.id
+	
+--	AND Games.id = (SELECT Games.id FROM Games WHERE Games.id_tour = Tours.id AND (Games.ID_TeamHome = Teams.id OR Games.ID_TeamGuests = Teams.id))
+--GROUP BY Teams.Name)A)C,
+--(SELECT Teams.Name AS team, COUNT(*) AS missed
+--FROM GoalsScored, Tours, Games, Players, Teams
+--WHERE GoalsScored.id_game = Games.id
+--	AND GoalsScored.ID_Player = Players.id
+--	AND Players.ID_Teams <> Teams.id
+	
+--	AND Games.id = (SELECT Games.id FROM Games WHERE Games.id_tour = Tours.id AND (Games.ID_TeamHome = Teams.id OR Games.ID_TeamGuests = Teams.id))
+--GROUP BY Teams.Name)B, Players, Teams, Position
+--WHERE C.missed = B.missed
+--	AND Players.ID_Position = Position.ID
+--	AND Position.Name = 'Вратарь'
+--	AND Teams.Name = B.team
+--	AND Players.ID_Teams = Teams.ID
+--GO
+
+exec BestGoalkeeper	
+-------------------------------------------------------------------
+--4. Турнирное положение команды по заданному туру
+--ALTER FUNCTION ResultConcreteTour
+--(
+--	@team nvarchar(64),
+--	@tour int
+--)
+--RETURNS  @result table
+--(
+--	position int,
+--	team nvarchar(64),
+--	points int
+--)	
+--AS
+--BEGIN
+--DECLARE @result1 table
+--(
+--	tour int,
+--	game int,
+--	teamHome nvarchar (64),
+--	pointH int,
+--	score nvarchar (10),
+--	pointG int,
+--	teamGuests nvarchar (64)
+--)
+--DECLARE  @result2 table
+--(
+--	team nvarchar(64),
+--	points int
+--)	
+--INSERT @result1
+--SELECT *
+--FROM dbo.ResultGameAll()
+
+--INSERT @result2
+--SELECT teamHome, pointH
+--FROM @result1
+--WHERE tour = @tour
+--UNION ALL
+--SELECT teamGuests, pointG
+--FROM @result1
+--WHERE tour = @tour
+
+--DECLARE  @result3 table
+--(
+--	position int identity (1,1),
+--	team nvarchar(64),
+--	points int
+--)
+--INSERT @result3
+--SELECT *
+--FROM @result2 
+--ORDER BY points DESC
+
+--INSERT @result
+--SELECT *
+--FROM @result3 
+--WHERE team = @team
+--ORDER BY points DESC
+--RETURN
+--END 
+--GO
+
+SELECT *
+FROM dbo.ResultConcreteTour ('Ливерпуль', '10')
+
+SELECT *
+FROM dbo.ResultConcreteTour ('Ливерпуль', '5')
+
+SELECT *
+FROM dbo.ResultConcreteTour ('Ливерпуль', '3')
+
+--DROP FUNCTION ResultConcreteTour
+-------------------------------------------------------------------------
+--5. Вывести результаты конкретной команды по каждому туру
+--ALTER FUNCTION ResultConcreteTeam
+--(
+--	@team nvarchar(64)
+--)
+--RETURNS @result table
+--	(
+--		tour int,
+--		game int,
+--		teamHome nvarchar (64),
+--		pointH int,
+--		score nvarchar (10),
+--		pointG int,
+--		teamGuests nvarchar (64)
+--	)
+--AS
+--BEGIN
+--DECLARE @result1 table
+--	(
+--		tour int,
+--		game int,
+--		teamHome nvarchar (64),
+--		pointH int,
+--		score nvarchar (10),
+--		pointG int,
+--		teamGuests nvarchar (64)
+--	)
+--INSERT @result1
+--SELECT *
+--FROM dbo.ResultGameAll()
+--INSERT @result
+--SELECT *
+--FROM @result1
+--WHERE teamHome = @team
+--UNION ALL
+--SELECT * 
+--FROM @result1
+--WHERE teamGuests = @team
+--ORDER BY tour
+--RETURN
+--END
+--GO
+
+SELECT *
+FROM dbo.ResultConcreteTeam ('Манчестер Юнайтед')
+SELECT *
+FROM dbo.ResultConcreteTeam ('Арсенал')
+SELECT *
+FROM dbo.ResultConcreteTeam ('Ливерпуль')
+---------------------------------------------------------------------------------
+--6. Турнирный путь чемпиона
+--ALTER FUNCTION ResultGameAll()
+--RETURNS @result table
+--	(
+--		tour int,
+--		game int,
+--		teamHome nvarchar (64),
+--		pointH int,
+--		score nvarchar (10),
+--		pointG int,
+--		teamGuests nvarchar (64)
+--	)
+--AS
+--BEGIN
+--DECLARE @tmp table
+--	(
+--		game int,
+--		tour int,
+--		team nvarchar (64),
+--		score nvarchar (10)
+--	)
+--INSERT @tmp
+--SELECT Games.ID as gam, Tours.Name as tour, A.Name as name,COUNT (GoalsScored.ID_Player )  AS[Goal]
+--FROM Teams A, Teams B, Games, Tours, GoalsScored, Players
+--WHERE Games.ID_TeamHome = A.ID
+--	AND Games.ID_TeamGuests = B.ID
+--	AND Tours.ID = Games.ID_Tour
+--	AND GoalsScored.ID_Player = Players.ID
+--	AND Players.ID_Teams = A.ID
+--	AND Games.ID = GoalsScored.ID_Game
+--GROUP BY A.Name, B.Name, Tours.Name, Games.ID
+
+--INSERT @tmp
+--SELECT Games.ID , Tours.Name , Teams.Name , 0
+--FROM  Games, Tours, Teams
+--WHERE Games.ID_TeamHome = Teams.ID
+--	AND Tours.ID = Games.ID_Tour
+--	AND Teams.Name NOT IN
+--		(
+--			Select team FROM @tmp WHERE Tours.ID = tour
+--		)
+--DECLARE @tmp2 table
+--	(
+--		game int,
+--		tour int,
+--		team nvarchar (64),
+--		score nvarchar (10)
+--	)
+--INSERT @tmp2
+--SELECT Games.ID as gam, Tours.Name as tour, B.Name as name, COUNT (GoalsScored.ID_Player) AS[Goal]
+--FROM Teams A, Teams B, Games, Tours, GoalsScored, Players
+--WHERE Games.ID_TeamGuests = B.ID
+--	AND Games.ID_TeamHome =  A.ID
+--	AND Tours.ID = Games.ID_Tour
+--	AND GoalsScored.ID_Player = Players.ID
+--	AND Players.ID_Teams = B.ID
+--	AND Games.ID = GoalsScored.ID_Game
+--GROUP BY A.Name, B.Name, Tours.Name, Games.ID
+
+--INSERT @tmp2
+--SELECT Games.ID , Tours.Name , Teams.Name , 0
+--FROM  Games, Tours, Teams
+--WHERE Games.ID_TeamGuests = Teams.ID
+--	AND Tours.ID = Games.ID_Tour
+--	AND Teams.Name NOT IN
+--		(
+--			Select team FROM @tmp2 WHERE Tours.ID = tour
+--		)
+--INSERT @result
+--SELECT A.tour, A.game, B.team ,COUNT(*)*3, cast ( B.score as nvarchar) + ' - ' + cast (A.score as nvarchar),0, A.team 
+--FROM
+--(SELECT tour, game, team , score
+--FROM @tmp2) A,
+--(SELECT tour, game, team , score
+--FROM @tmp) B
+--WHERE A.game = B.game
+--	AND A.score < B.score
+--GROUP BY  A.tour, A.game, B.team ,A.score, B.score, A.team 
+--UNION ALL
+--SELECT A.tour, A.game, B.team ,COUNT(*), cast ( B.score as nvarchar) + ' - ' + cast (A.score as nvarchar),COUNT(*), A.team 
+--FROM
+--(SELECT tour, game, team , score
+--FROM @tmp2) A,
+--(SELECT tour, game, team , score
+--FROM @tmp) B
+--WHERE A.game = B.game
+--	AND A.score = B.score
+--GROUP BY  A.tour, A.game, B.team ,A.score, B.score, A.team 
+--UNION ALL
+--SELECT A.tour, A.game, B.team ,0, cast ( B.score as nvarchar) + ' - ' + cast (A.score as nvarchar),COUNT(*)*3, A.team 
+--FROM
+--(SELECT tour, game, team , score
+--FROM @tmp2) A,
+--(SELECT tour, game, team , score
+--FROM @tmp) B
+--WHERE A.game = B.game
+--	AND A.score > B.score
+--GROUP BY  A.tour, A.game, B.team ,A.score, B.score, A.team 
+--ORDER BY game
+
+--RETURN
+--END
+--GO
+
+SELECT *
+FROM dbo.ResultGameAll()
+-----------------------------------------
+--ALTER PROCEDURE Champion
+--AS
+--DECLARE @result table
+--	(
+--		tour int,
+--		game int,
+--		teamHome nvarchar (64),
+--		pointH int,
+--		score nvarchar (10),
+--		pointG int,
+--		teamGuests nvarchar (64)
+--	)
+--	DECLARE @result1 table
+--	(
+--		team nvarchar(64),
+--		point int
+--	)
+--		DECLARE @result2 table
+--	(
+--		team nvarchar(64)
+--	)
+--	DECLARE @result3 nvarchar(64)
+--INSERT @result
+--SELECT *
+--FROM dbo.ResultGameAll()
+
+--INSERT @result1
+--SELECT B.team, SUM(B.points)
+--FROM
+--(SELECT  teamHome AS team, SUM(pointH) AS points
+--FROM @result
+--GROUP BY teamHome
+--UNION ALL
+--SELECT  teamGuests AS team, SUM(pointG) AS points
+--FROM @result
+--GROUP BY teamGuests)B
+--GROUP BY B.team
+
+
+--SET @result3 = (SELECT team
+--FROM @result1 A
+--WHERE A.point = (SELECT max(point) FROM @result1 ))
+
+--SELECT *
+--FROM dbo.ResultConcreteTeam (@result3);
+
+--GO
+
+exec Champion
+--------------------------------------------------------------------
+--7. Вывести имя команды забившее большее количество голов
+--CREATE FUNCTION MAXTeamGoal ()
+--	RETURNS @result table
+--	(
+--		team nvarchar(64),
+--		goal int
+--	)
+--AS
+--BEGIN
+--DECLARE @res table
+--	(
+--		team nvarchar(64),
+--		goal int
+--	)
+--INSERT @res
+--SELECT Teams.Name , COUNT (GoalsScored.ID_Player)
+--FROM Teams, GoalsScored, Players
+--WHERE  Players.ID_Teams = Teams.ID
+--	AND GoalsScored.ID_Player = Players.ID
+--GROUP BY Teams.Name
+--INSERT @result
+--SELECT *
+--FROM @res
+--WHERE goal = (SELECT MAX (goal) FROM @res)
+--RETURN
+--END
+--GO	
+	SELECT *
+	FROM dbo.MAXTeamGoal()
+
+-------------------------------------------------------------------------
+--CREATE TRIGGER ProtectionFromFool
+--ON Games
+--INSTEAD OF INSERT
+--AS
+--DECLARE @teamH nvarchar(64)
+--DECLARE @teamG nvarchar(64)
+
+--SELECT @teamH = ID_TeamHome, @teamG = ID_TeamGuests
+--FROM INSERTED;
+--IF @teamG LIKE @teamH
+--BEGIN
+--	PRINT 'Команда не может играть сама с собой!!!';
+--	ROLLBACK TRAN;
+--END 
+--GO
+
+--INSERT INTO Games 
+--(ID_Tour, ID_TeamHome, ID_TeamGuests) VALUES (1,2,2);

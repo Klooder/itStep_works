@@ -1,0 +1,29 @@
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\bin\Debug\HwGame.exe.config
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\bin\Debug\HwGame.exe
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\bin\Debug\HwGame.pdb
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.csprojResolveAssemblyReference.cache
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.Form1.resources
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.Properties.Resources.resources
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.csproj.GenerateResource.Cache
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.exe
+c:\users\09642\documents\visual studio 2015\Projects\HwGame\HwGame\obj\Debug\HwGame.pdb
+D:\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.exe.config
+D:\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.exe
+D:\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.pdb
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csprojResolveAssemblyReference.cache
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.Properties.Resources.resources
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csproj.GenerateResource.Cache
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csproj.CoreCompileInputs.cache
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.exe
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.pdb
+D:\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.Form2.resources
+D:\It\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.exe.config
+D:\It\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.exe
+D:\It\С#WF\HW\HwGame\HwGame\bin\Debug\HwGame.pdb
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csprojResolveAssemblyReference.cache
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.Form2.resources
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.Properties.Resources.resources
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csproj.GenerateResource.Cache
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.csproj.CoreCompileInputs.cache
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.exe
+D:\It\С#WF\HW\HwGame\HwGame\obj\Debug\HwGame.pdb

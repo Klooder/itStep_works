@@ -1,0 +1,28 @@
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe.config
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csproj.GenerateResource.Cache
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.exe
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.pdb
+c:\users\09642\documents\visual studio 2015\Projects\WindowsFormsApplication4\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Form1.resources
+D:\С#WF\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe.config
+D:\С#WF\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe
+D:\С#WF\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csprojResolveAssemblyReference.cache
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Form1.resources
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csproj.GenerateResource.Cache
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csproj.CoreCompileInputs.cache
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.exe
+D:\С#WF\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.pdb
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe.config
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.exe
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\bin\Debug\WindowsFormsApplication4.pdb
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csprojResolveAssemblyReference.cache
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Form1.resources
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.Properties.Resources.resources
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csproj.GenerateResource.Cache
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.csproj.CoreCompileInputs.cache
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.exe
+D:\It\С#WF\HW\HwColor+Paint\HWColors\WindowsFormsApplication4\obj\Debug\WindowsFormsApplication4.pdb

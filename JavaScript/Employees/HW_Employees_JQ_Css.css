@@ -1,0 +1,117 @@
+.f{
+    font-size: 40px;
+    text-align: center;
+    
+}
+#body{
+    background: #EEEDEF;
+}
+.d1{
+    text-align: center;
+}
+.ar{
+    width: 100px;
+   
+}
+#ar{
+    width: 700px;
+    height: 300px;
+    position: fixed;
+    left :35%;
+     z-index: 1000;
+     background-color: #EEEDEF;
+     border-radius: 10px;
+     display: none;
+}
+.im{
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgrey;
+}
+.d2{
+    width: 200px;
+}
+.z{
+    position: absolute;
+    top: 105%;
+    left: 43%;
+}
+.opasity{
+     opacity: 0.5; 
+    background-color: #000;
+    z-index: 999;
+     display: none; 
+     position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+}
+.ar2{
+    position: relative;
+    top:15%;
+    left: 8%;
+
+}
+.new{
+    width: 596px;
+    height: 200px;
+    border-radius: 10px;
+    background: white;
+    margin: 1% 1% 1% 1%;
+    display: inline-block;
+}
+.left{
+    position: relative;
+    left: 5%;
+}
+.name{
+    font-size: 20px;
+    font-weight: bold;
+}
+.rem{
+    position: relative;
+    bottom: 20%;
+    left: 83%;
+    width: 50px;
+    height: 50px;
+}
+.rem2{
+    position: relative;
+    bottom: 20%;
+    left: 60%;
+    width: 50px;
+    height: 50px;
+}
+.y{
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    background: white;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    z-index: 1000;
+}
+.y2{
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: 20%;
+    left: 17%;
+}
+.b2{
+    position: relative;
+    top: 20%;
+    left: 55%;
+    width: 50px;
+    height: 50px;
+}
+.b1{
+    position: relative;
+    top: 45%;
+    left: 35%;
+    width: 50px;
+    height: 50px;
+}

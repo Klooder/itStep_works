@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script>
+        function Name(name, value) {
+            do {
+                value = prompt(name, value);
+                if (value == null || value == "") continue;
+                var rez = prov(value);
+                if (rez == "No") {
+                    alert("Вы ввели недопустимые символы!");
+                    continue;
+                }
+                return value;
+                break;
+            }
+            while (true);
+        }
+        function prov(value) {
+            var str = "!@#$%^&*()_-=+~`?><\/,";
+            for (var i = 0; i < value.length; i++) {
+                for (var j = 0; j < str.length; j++) {
+                    if (value[i] == str[j]) {
+                        return "No";
+                    }
+                }
+            }
+        }
+
+        function Question(quest) {
+            this.quest = quest;
+            return this;
+        }
+
+        Question.prototype =
+            {
+                ts: function () {
+                    return confirm(this.quest);
+                }
+            }
+
+    </script>
+</head>
+
+<body>
+    <script>
+        var lastname = "", firstname = "";
+        var ques = ["1+1=5?", "1*2=3?", "1-3=8?", "1/4=6?", "1+1=2?", "6+3=9?", "7*1=19?", "13+14=32?", "9+3=12?", "4*5=45?"];
+        var out = [false, false, false, false, true, true, false, false, true, false];
+        var point = [1, 2, 1, 2, 2, 1, 2, 1, 2, 3];
+        var points = 0;
+        var result = new Array();
+        lastname = Name("Введите фамилию", lastname);
+        firstname = Name("Введите имя", firstname);
+
+
+
+        for (var q1 = 0; q1 < this.ques.length; q1++) {
+            var q = new Question(ques[q1]);
+            if (q.ts() == out[q1]) {
+                points += point[q1];
+                result.push(out[q1]);
+            }
+            else
+                result.push(out[q1]);
+        }
+
+        alert(this.lastname + " " + this.firstname + "\nВаш результат: " + points + "/17");
+        alert("Ответы " + this.lastname + " " + this.firstname + " : " + result);
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+Установить в файлах 
+server.exe.config
+client.exe.config
+свой ip!

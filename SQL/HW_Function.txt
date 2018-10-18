@@ -1,0 +1,226 @@
+1. Функцию, возвращающую кол-во студентов, которые не были в библиотеке.
+CREATE FUNCTION StudentsOff ()
+RETURNS int
+AS
+BEGIN
+DECLARE @cntStudents int
+	SET @cntStudents = (SELECT COUNT(Students.ID)FROM Students)
+DECLARE @inLibrary int
+	SET @inLibrary = (SELECT COUNT(Students.ID)FROM Students, S_Cards
+						WHERE Students.ID =S_Cards.Id_Student)
+DECLARE @res int
+	SET @res = @cntStudents - @inLibrary
+RETURN @res
+END
+
+SELECT dbo.StudentsOff ();
+
+DROP FUNCTION dbo.StudentsOff;
+
+2. Функцию, возвращающую минимальное из трех переданных параметров.
+CREATE FUNCTION MinOfThree
+(
+	@a int,
+	@b int,
+	@c int
+)
+RETURNS int
+AS
+BEGIN
+	DECLARE @res int
+	IF @a<@b AND @a<@c
+		SET @res = @a
+	ELSE IF @b<@a AND @b<@c
+		SET @res = @b
+	ELSE
+		SET @res = @c
+	RETURN @res
+END
+
+SELECT dbo.MinOfThree (5,4,2);
+
+3. Сравнение чисел по разрядам
+CREATE FUNCTION Сomparison
+(
+	@a int
+)
+RETURNS varchar(30)
+AS
+BEGIN
+	DECLARE @res varchar(30)
+	DECLARE @b int
+	SET @b = @a % 10
+	DECLARE @c int
+	SET @c = (@a-@b) /10
+	IF @b<@c
+		SET @res = 'Первый разряд больше второго'
+	ELSE IF @b>@c
+		SET @res = 'Второй разряд больше первого'
+	ELSE
+		SET @res = 'Разряды равны'
+RETURN @res
+END
+		
+SELECT dbo.Сomparison (456);
+
+4. функцию, возвращающую кол-во взятых книг по каждой из групп и по каждой из кафедр
+CREATE FUNCTION GroupsDepartments ()
+RETURNS @res table 
+	(
+		Name varchar (64),
+		cnt int
+	)
+AS
+BEGIN
+DECLARE @tmpTable table
+	(
+		Name varchar (64),
+		cnt int
+	);
+INSERT @tmpTable
+SELECT groups.name, COUNT(books.id) AS cnt
+FROM groups, Books, Students, S_Cards
+WHERE groups.id = Students.Id_Group
+	AND S_Cards.Id_Book = Books.ID
+	AND S_Cards.Id_Student = Students.ID
+GROUP BY groups.name
+
+INSERT @tmpTable
+SELECT Departments.Name, COUNT (books.id) AS cnt
+FROM Books, Departments, T_Cards, teachers
+WHERE Departments.ID = teachers.ID_dep
+	AND T_Cards.Id_Books = books.ID
+	AND T_Cards.Id_Teacher = teachers.ID
+GROUP BY Departments.Name
+
+INSERT @res
+SELECT *
+FROM @tmpTable
+RETURN
+END
+GO
+
+SELECT * 
+FROM dbo.GroupsDepartments();
+
+5. Функцию, возвращающую список книг, отвечающих набору критериев (имя автора, фамилия автора, тематика, категория, сортировка по номеру 
+поля, направление сортировки)
+CREATE FUNCTION BooksForСriteria
+(
+	@FistName varchar (64),
+	@LastName varchar (64),
+	@themes varchar (64),
+	@categories varchar (64),
+	@Sort int, 
+	@SetSort varchar (20)
+)
+RETURNS  @res table
+	(
+		BooksN varchar(64),
+		AuthorsN varchar (64),
+		ThemesN varchar (64),
+		Categories varchar (64)
+	)
+AS
+BEGIN
+
+DECLARE  @resTmp table
+	(
+		BooksN varchar(64),
+		AuthorsN varchar (64),
+		ThemesN varchar (64),
+		Categories varchar (64)
+	)
+
+INSERT @resTmp
+	SELECT Books.Name AS Books, Authors.LastName + ' ' + Authors.FirstName AS Authors, themes.NAME AS Themes, Categories.Name AS Categories
+	FROM Books, Authors, themes, Categories
+	WHERE books.Id_Author = Authors.ID
+		AND Books.Id_Category = Categories.Id
+		AND Books.Id_Themes = themes.ID
+		AND Authors.FirstName = @FistName
+		AND Authors.LastName = @LastName
+		AND themes.NAME = @themes
+		AND Categories.Name = @categories
+	GROUP BY Books.Name, Authors.LastName + ' ' + Authors.FirstName, themes.NAME, Categories.Name
+
+IF @Sort =1 AND @SetSort = 'ASC'
+	INSERT @res
+	SELECT * 
+	FROM @resTmp
+	ORDER BY 1
+ELSE IF @Sort =2 AND @SetSort = 'ASC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp	
+	ORDER BY 2
+ELSE IF @Sort =3 AND @SetSort = 'ASC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp
+	ORDER BY 3
+ELSE IF @Sort =4 AND @SetSort = 'ASC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp
+	ORDER BY 4
+IF @Sort =1 AND @SetSort = 'DESC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp
+	ORDER BY 1 DESC
+ELSE IF @Sort =2 AND @SetSort = 'DESC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp	
+	ORDER BY 2 DESC
+ELSE IF @Sort =3 AND @SetSort = 'DESC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp	
+	ORDER BY 3 DESC
+ELSE IF @Sort =4 AND @SetSort = 'DESC'
+	INSERT @res
+	SELECT * 
+	FROM  @resTmp	
+	ORDER BY 4 DESC
+		
+RETURN 
+END
+GO
+
+SELECT *
+FROM dbo.BooksForСriteria('Сергей','Никольский','Высшая математика','Математический анализ',2,'DESC')
+
+6. Функцию, которая возвращает список библиотекарей и кол-во выданных каждым из них книг
+CREATE FUNCTION LibsBooksCnt()
+RETURNS @res table
+(
+	libs varchar (20),
+	cnt int
+)
+AS
+BEGIN
+INSERT @res
+
+SELECT B.libs AS libs, SUM (A.Books+B.Books) AS Books
+FROM 
+(SELECT libs.lastname + ' ' + libs.firstname AS libs, COUNT(*) AS Books
+FROM libs, books, S_Cards, T_Cards
+WHERE S_Cards.Id_Lib=libs.id
+	AND S_Cards.Id_Book = Books.ID 
+GROUP BY libs.lastname + ' ' + libs.firstname)A,
+(SELECT libs.lastname + ' ' + libs.firstname AS libs, COUNT(*) AS Books
+FROM libs, books, S_Cards, T_Cards
+WHERE T_Cards.Id_Books = Books.ID
+	AND T_Cards.Id_Lib = libs.id
+GROUP BY libs.lastname + ' ' + libs.firstname)B
+WHERE A.libs=B.libs
+GROUP BY B.libs
+RETURN 
+END
+GO
+
+SELECT *
+FROM dbo.LibsBooksCnt()
+

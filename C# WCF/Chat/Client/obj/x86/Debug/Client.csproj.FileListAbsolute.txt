@@ -1,0 +1,13 @@
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\Client.exe.config
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\Client.exe
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\Client.pdb
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\ServerWcfService.dll
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.frmClient.resources
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.Properties.Resources.resources
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.csproj.GenerateResource.Cache
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.exe
+C:\Users\Programmer\Desktop\ChatServer\Client\obj\x86\Debug\Client.pdb
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\ChatLibrary.dll
+C:\Users\Programmer\Desktop\ChatServer\Client\bin\Debug\ChatLibrary.pdb

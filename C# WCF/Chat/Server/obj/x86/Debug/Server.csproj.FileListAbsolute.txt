@@ -1,0 +1,12 @@
+C:\Users\Programmer\Desktop\ChatServer\Server\bin\Debug\Server.exe.config
+C:\Users\Programmer\Desktop\ChatServer\Server\bin\Debug\Server.exe
+C:\Users\Programmer\Desktop\ChatServer\Server\bin\Debug\Server.pdb
+C:\Users\Programmer\Desktop\ChatServer\Server\bin\Debug\ChatLibrary.dll
+C:\Users\Programmer\Desktop\ChatServer\Server\bin\Debug\ChatLibrary.pdb
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.Form1.resources
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.Properties.Resources.resources
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.csproj.GenerateResource.Cache
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.exe
+C:\Users\Programmer\Desktop\ChatServer\Server\obj\x86\Debug\Server.pdb

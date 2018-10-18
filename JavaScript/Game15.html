@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>15</title>
+</head>
+
+<body id="bod">
+    <script>
+        function Game(sizeX, sizeY) {
+            var self = this;
+            this.arr = [];
+            this.sizeX = sizeX;
+            this.sizeY = sizeY;
+
+            return this;
+
+        }
+        Game.prototype =
+            {
+                Rand: function (evt) {
+                    var cnt = 0;
+                    var a = true;
+
+                    while (a == true) {
+                        var R = Math.floor(Math.random() * (15 - 1 + 1)) + 1;
+                        for (var key = 0; key < this.arr.length; key++) {
+                            if (this.arr[key] == R)
+                                cnt = 1;
+                        }
+                        if (cnt == 0) {
+                            this.arr[this.arr.length] = R;
+                            a = false;
+                        }
+                        else
+                            cnt = 0;
+                    }
+                    return R;
+                },
+
+                table: function (evt) {
+                    this.tabl = document.createElement("table");
+                    this.tabl.style = "margin: 0 auto";
+                    var container = document.createElement("div");
+                    var c = Math.floor(Math.random() * (16 - 1 + 1)) + 1;   // позиция пустой ячейки
+                    var c1 = 1;
+                    for (var i = 0; i < 4; i++) {
+                        var tr = document.createElement("tr");
+                        for (var j = 0; j < 4; j++) {
+                            if (c1 != c) {
+                                td = document.createElement("td");
+                                td.appendChild(this.buttons(container));
+                                tr.appendChild(td);
+                            }
+                            else {
+                                td = document.createElement("td");
+                                td.textContent = "";
+                                tr.appendChild(td);
+                            }
+                            c1++;
+                        }
+                        this.tabl.appendChild(tr);
+                    }
+                    this.tabl.style.border = "1px solid #808080";
+                },
+                buttons: function (evt) {
+                    var button = document.createElement("button");
+                    button.style.width = this.sizeX + "px";
+                    button.style.height = this.sizeY + "px";
+                    button.innerHTML = this.Rand();
+                    var _self = this;
+                    button.onclick = function (evt) {
+                        _self.step(this);
+                    }
+                    evt.appendChild(button);
+                    return button;
+                },
+                Win: function (evt) {
+                    var res = 1;
+                    for (var i = 0; i < 4; i++) {
+                        for (var j = 0; j < 4; j++) {
+                            if (this.tabl.rows[i].cells[j].textContent == res)
+                                res++;
+                        }
+                    }
+                    if (res == 16) {
+                        alert("You Win!");
+                    }
+                },
+                step: function (evt) {
+                    for (var i = 0; i < 4; i++) {
+                        for (var j = 0; j < 4; j++) {
+                            if (this.tabl.rows[i].cells[j].textContent == evt.textContent) {
+                                try {
+                                    if (this.tabl.rows[i + 1].cells[j].textContent == "") {
+                                       this.tabl.rows[i].cells[j].innerHTML = "";
+                                        this.tabl.rows[i + 1].cells[j].appendChild(evt); 
+                                        
+                                        this.Win();
+                                        return;
+                                    }
+                                }
+                                catch
+                                {
+
+                                }
+                                try {
+                                    if (this.tabl.rows[i - 1].cells[j].textContent == "") {
+                                        this.tabl.rows[i].cells[j].innerHTML = "";
+                                        this.tabl.rows[i - 1].cells[j].appendChild(evt);
+                                        this.Win();
+                                        return;
+
+                                    }
+                                } catch
+                                {
+
+                                }
+                                try {
+                                    if (this.tabl.rows[i].cells[j + 1].textContent == "") {
+                                        this.tabl.rows[i].cells[j].innerHTML = "";
+                                        this.tabl.rows[i].cells[j + 1].appendChild(evt);
+                                        this.Win();
+                                        return; 
+                                    }
+                                } catch
+                                {
+
+                                }
+                                try {
+                                    if (this.tabl.rows[i].cells[j - 1].textContent == "") {
+                                        this.tabl.rows[i].cells[j].innerHTML = "";
+                                        this.tabl.rows[i].cells[j - 1].appendChild(evt);
+                                        this.Win();
+                                        return;
+
+                                    }
+                                } catch
+                                {
+
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        var game = new Game(100, 100);
+        game.table();
+        document.getElementById("bod").appendChild(game.tabl);
+    </script>
+
+</body>
+
+</html>
